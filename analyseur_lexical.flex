@@ -15,6 +15,7 @@
 
 
 %%
+"#".*\n { /*Commentaire */ }
 [ \t]  { /* ignore les blancs et tabulations */ }
 \n {/* ignore sauts de ligne */  }
 ";"      { return POINT_VIRGULE; }
