@@ -543,7 +543,7 @@ char *yytext;
 #line 5 "analyseur_lexical.flex"
 /* code copié AU DÉBUT de l'analyseur */
 
-#include "symboles.h"
+#include "analyseur_syntaxique.tab.h"
 #define YY_NO_INPUT 1
 /* Déclarations à compléter ... */
 #line 550 "analyseur_lexical_flex.c"

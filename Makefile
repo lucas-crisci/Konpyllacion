@@ -1,23 +1,18 @@
+LEX = flex
+YACC = bison -d -t
 CC = gcc
-FLEX = flex
 
-LIBS = -lm 
-CCFLAGS = -Wall -ggdb
+compilo: compilo.c analyseur_syntaxique.tab.o analyseur_lexical_flex.o
+			$(CC) -o $@ $^
 
-OBJ = analyseur_lexical_flex.o util.o
+analyseur_syntaxique.tab.c : analyseur_syntaxique.y
+			$(YACC) $<
 
-all: compilo
-
-compilo: compilo.c $(OBJ)
-	$(CC) $(CCFLAGS) -o compilo compilo.c $(OBJ)
-
-analyseur_lexical_flex.c: analyseur_lexical.flex
-	$(FLEX) -o $@ $<
+analyseur_lexical_flex.c : analyseur_lexical.flex analyseur_syntaxique.tab.c
+			$(FLEX) -o $@ $<
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $^
-
-.PHONY : clean
+			$(CC) $(CCFLAGS) -c $^
 
 clean:
 	- rm -f $(OBJ)

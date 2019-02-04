@@ -4,7 +4,7 @@
 %{
 /* code copié AU DÉBUT de l'analyseur */
 
-#include "symboles.h"
+#include "analyseur_syntaxique.tab.h"
 %}
 %option yylineno
 %option nounput
