@@ -18,6 +18,14 @@ analyseur_syntaxique.tab.c : analyseur_syntaxique.y
 analyseur_lexical_flex.c: analyseur_lexical.flex analyseur_syntaxique.tab.c
 	$(FLEX) -o $@ $<
 
+
+
+affiche_arbre_abstrait.o: affiche_arbre_abstrait.c
+	$(CC) $(CCFLAGS) -c affiche_arbre_abstrait.c
+
+
+
+
 %.o: %.c
 	$(CC) $(CCFLAGS) -c $^
 
