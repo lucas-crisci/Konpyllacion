@@ -28,3 +28,4 @@ clean:
 	- rm -f compilo
 	- rm -f test_yylex
 	- rm -f analyseur_lexical_flex.c
+	- rm -f analyseur_syntaxique.tab

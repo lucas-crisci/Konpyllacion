@@ -9,6 +9,7 @@
 
 FILE *yyin;
 extern char *yytext;   // déclaré dans analyseur_lexical
+n_prog *n;
 
 /***********************************************************************
  * Fonction auxiliaire appelée par le compilo en mode -l pour tester
