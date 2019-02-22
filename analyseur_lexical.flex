@@ -4,7 +4,9 @@
 %{
 /* code copié AU DÉBUT de l'analyseur */
 
+#include "syntabs.h"
 #include "analyseur_syntaxique.tab.h"
+#include <stdlib.h>
 %}
 %option yylineno
 %option nounput
@@ -12,6 +14,9 @@
 
 /* Déclarations à compléter ... */
 
+digit		[0-9]
+letter		[a-zA-Z\$_]
+alphanum	{digit}|{letter}
 
 
 %%
@@ -45,11 +50,12 @@
 "ecrire"      { return ECRIRE; }
 [a-zA-Z]+ { return IDENTIF;}
 "$"[a-zA-Z_0-9]+  { return IDENTIF; }
-[0-9]+ { return NOMBRE; }
+[0-9]+ { yylval.number=atoi(yytext); return NOMBRE; }
 ","   { return VIRGULE;}
 
+"$"[a-zA-Z_0-9]+  { return IDENTIF; }
 
-
+{letter}{alphanum}*	{yylval.chaine = (char *) malloc(strlen(yytext)); strcpy(yylval.chaine,yytext;return IDENTIF; }
 
 
 %%
