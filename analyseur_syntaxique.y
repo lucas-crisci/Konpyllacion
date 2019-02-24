@@ -93,7 +93,8 @@ int yyerror(char *s); // declare ci-dessous
 %type <n_l_dec> listDecVarBis
 %type <n_dec> decVar
 
-
+%type <n_l_dec> listDecFct
+%type <n_l_dec> decFct
 
 
 //TODO: compléter avec la liste des terminaux
