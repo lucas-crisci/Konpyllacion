@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+#include "syntabs.h"
 #include "analyseur_lexical_flex.h"
 #include "analyseur_syntaxique.tab.h"
 #include "affiche_arbre_abstrait.h"
@@ -94,8 +94,9 @@ int main(int argc, char **argv) {
   if(affiche_lex == 1) {
     test_yylex( yyin );
   }
-  yyparse();
+
   if( affiche_syntaxe_abstraite ) {
+    yyparse();
     affiche_n_prog(n);
   }
   if(affiche_code3a){

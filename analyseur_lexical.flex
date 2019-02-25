@@ -3,10 +3,11 @@
  */
 %{
 /* code copié AU DÉBUT de l'analyseur */
+#include<stdlib.h>
 
-#include "syntabs.h"
-#include "analyseur_syntaxique.tab.h"
-#include <stdlib.h>
+#include"syntabs.h"
+#include"analyseur_syntaxique.tab.h"
+
 %}
 %option yylineno
 %option nounput
@@ -14,9 +15,9 @@
 
 /* Déclarations à compléter ... */
 
-digit		[0-9]
-letter		[a-zA-Z\$_]
-alphanum	{digit}|{letter}
+digit       [0-9]
+letter      [a-zA-Z\$_]
+alphanum    {digit}|{letter}
 
 
 %%
@@ -48,15 +49,15 @@ alphanum	{digit}|{letter}
 "retour"      { return RETOUR; }
 "lire"      { return LIRE; }
 "ecrire"      { return ECRIRE; }
-[a-zA-Z]+ { return IDENTIF;}
-"$"[a-zA-Z_0-9]+  { return IDENTIF; }
-[0-9]+ { yylval.number=atoi(yytext); return NOMBRE; }
+[a-zA-Z]+ {yylval.idval = strdup(yytext); return IDENTIF;}
+
+[0-9]+ {yylval.nval = atoi(yytext); return NOMBRE;}
 ","   { return VIRGULE;}
 
-"$"[a-zA-Z_0-9]+  { return IDENTIF; }
+"$"[a-zA-Z_0-9]+  {yylval.idval = strdup(yytext); return IDENTIF;}
 
-{letter}{alphanum}*	{yylval.chaine = (char *) malloc(strlen(yytext)); strcpy(yylval.chaine,yytext;return IDENTIF; }
 
+{letter}{alphanum}* {yylval.idval = strdup(yytext); return IDENTIF;}
 
 %%
 
