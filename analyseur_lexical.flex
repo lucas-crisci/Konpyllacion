@@ -49,15 +49,15 @@ alphanum    {digit}|{letter}
 "retour"      { return RETOUR; }
 "lire"      { return LIRE; }
 "ecrire"      { return ECRIRE; }
-[a-zA-Z]+ {yylval.idval = strdup(yytext); return IDENTIF;}
+[a-zA-Z]+ {yylval.chaine = strdup(yytext); return IDENTIF;}
 
-[0-9]+ {yylval.nval = atoi(yytext); return NOMBRE;}
+[0-9]+ {yylval.number = atoi(yytext); return NOMBRE;}
 ","   { return VIRGULE;}
 
-"$"[a-zA-Z_0-9]+  {yylval.idval = strdup(yytext); return IDENTIF;}
+"$"[a-zA-Z_0-9]+  {yylval.chaine = strdup(yytext); return IDENTIF;}
 
 
-{letter}{alphanum}* {yylval.idval = strdup(yytext); return IDENTIF;}
+{letter}{alphanum}* {yylval.chaine = strdup(yytext); return IDENTIF;}
 
 %%
 
