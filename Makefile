@@ -5,7 +5,7 @@ LIBS = -lm
 CCFLAGS = -Wall -ggdb
 YACC = bison -d -t
 
-OBJ = analyseur_lexical_flex.o analyseur_syntaxique.tab.o util.o syntabs.o affiche_arbre_abstrait.o
+OBJ = analyseur_lexical_flex.o analyseur_syntaxique.tab.o util.o syntabs.o affiche_arbre_abstrait.o parcours_arbre_abstrait.o tabsymboles.o
 
 all: compilo
 
@@ -15,8 +15,14 @@ compilo: compilo.c $(OBJ)
 syntabs.o: syntabs.c
 	$(CC) $(CCFLAGS) -c $^
 
+tabsymboles.o: tabsymboles.c
+		$(CC) $(CCFLAGS) -c $^
+
 affiche_arbre_abstrait.o: affiche_arbre_abstrait.c
 	$(CC) $(CCFLAGS) -c $^
+
+parcours_arbre_abstrait.o: parcours_arbre_abstrait.c tabsymboles.h
+		$(CC) $(CCFLAGS) -c $^
 
 util.o: util.c
 	$(CC) $(CCFLAGS) -c $^

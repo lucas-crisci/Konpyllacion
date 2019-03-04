@@ -6,6 +6,7 @@
 #include "analyseur_lexical_flex.h"
 #include "analyseur_syntaxique.tab.h"
 #include "affiche_arbre_abstrait.h"
+#include "parcours_arbre_abstrait.h"
 
 FILE *yyin;
 extern char *yytext;   // déclaré dans analyseur_lexical
@@ -104,6 +105,8 @@ int main(int argc, char **argv) {
   }
   if(affiche_tabsymb){
     //Affiche table de symboles
+    yyparse();
+    parcours_n_prog(n);
   }
   if(affiche_nasm){
     //Affiche code cible NASM
