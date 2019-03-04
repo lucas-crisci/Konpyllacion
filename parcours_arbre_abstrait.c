@@ -265,7 +265,7 @@ void parcours_varDec(n_dec *n)
       ajouteIdentificateur(n->nom, portee, T_ENTIER, adresseArgumentCourant, 1);
       adresseArgumentCourant=adresseArgumentCourant+4;
     }
-    afficheTabsymboles();
+
   }
   else erreur("Var undefined");
 }
@@ -303,7 +303,7 @@ void parcours_var_simple(n_var *n)
 {
   if (rechercheExecutable(n->nom) == -1)
 	  erreur("var undefined");
-  else afficheTabsymboles();
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -314,5 +314,5 @@ void parcours_var_indicee(n_var *n)
 	  erreur("Var undefined");
   else if (tabsymboles.tab[rechercheExecutable(n->nom)].type == T_ENTIER)
 	  erreur("IT'S NOT A TAB!");
-  else afficheTabsymboles();
+
 }
