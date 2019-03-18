@@ -2,8 +2,15 @@
 #include "syntabs.h"
 #include "util.h"
 #include "tabsymboles.h"
+#include "code3a.h"
 
 
+	// a + 3 donne enfaite
+	// operande *t1 = parcours_exp(n->op1);
+	// operande *t2 = parcours_exp(n->op2);
+	// operande *t3 = code3code3a_new_temporaire();
+	// code3a_ajoute_instruction(arith_add,t1,t2,t3);
+	// return t3
 
 
 
@@ -42,9 +49,11 @@ extern int adresseArgumentCourant;
 
 void parcours_n_prog(n_prog *n)
 {
+	code3a_init();
 	portee = P_VARIABLE_GLOBALE;
 	parcours_l_dec(n->variables);
 	parcours_l_dec(n->fonctions);
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -77,19 +86,40 @@ void parcours_instr(n_instr *n)
 
 void parcours_instr_si(n_instr *n)
 {
-  parcours_exp(n->u.si_.test);
-  parcours_instr(n->u.si_.alors);
+	operande *suite = code3a_new_etiquette("SUITE");
+	operande *faux = code3a_new_etiquette("FAUX");
+
+  operande *res = parcours_exp(n->u.si_.test);
+
+	code3a_ajoute_instruction(jump_if_equal,res,code3a_new_constante(0),faux);
+	parcours_instr(n->u.si_.alors);
+	code3a_ajoute_instruction(jump,suite,NULL,NULL);
+
+	code3code3a_ajoute_etiquette(faux->u.oper_nom);
+
   if(n->u.si_.sinon){
     parcours_instr(n->u.si_.sinon);
   }
+	code3code3a_ajoute_etiquette(suite->u.oper_nom);
 }
 
 /*-------------------------------------------------------------------------*/
 
 void parcours_instr_tantque(n_instr *n)
 {
-  parcours_exp(n->u.tantque_.test);
+	operande *suite = code3a_new_etiquette("SUITE");
+	operande *test = code3a_new_etiquette("test");
+
+	code3code3a_ajoute_etiquette(test->u.oper_nom);
+  operande *res = parcours_exp(n->u.tantque_.test);
+
+	code3a_ajoute_instruction(jump_if_equal,res,code3a_new_constante(0),suite);
   parcours_instr(n->u.tantque_.faire);
+	code3a_ajoute_instruction(jump,test,NULL,NULL);
+
+	code3code3a_ajoute_etiquette(suite->u.oper_nom);
+
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -98,6 +128,8 @@ void parcours_instr_affect(n_instr *n)
 {
   parcours_var(n->u.affecte_.var);
   parcours_exp(n->u.affecte_.exp);
+
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -117,6 +149,7 @@ void parcours_appel(n_appel *n)
 
 void parcours_instr_retour(n_instr *n)
 {
+
   parcours_exp(n->u.retour_.expression);
 }
 
@@ -124,7 +157,13 @@ void parcours_instr_retour(n_instr *n)
 
 void parcours_instr_ecrire(n_instr *n)
 {
+	code3a_ajoute_instruction(sys_write,n->u.ecrire_.expression,NULL,NULL,NULL);
   parcours_exp(n->u.ecrire_.expression);
+
+
+
+
+
 }
 
 /*-------------------------------------------------------------------------*/
@@ -170,16 +209,27 @@ void parcours_opExp(n_exp *n)
 /*-------------------------------------------------------------------------*/
 
 void parcours_intExp(n_exp *n)
-{}
+{
+	code3a_ajoute_instruction(
+	alloc,
+	1,
+	code3a_new_constante(n),
+	NULL,
+	NULL);
+}
 
 /*-------------------------------------------------------------------------*/
 void parcours_lireExp(n_exp *n)
-{}
+{
+	code3a_ajoute_instruction(sys_read,NULL,NULL,NULL,NULL);
+}
 
 /*-------------------------------------------------------------------------*/
 
 void parcours_appelExp(n_exp *n)
 {
+
+	code3a_ajoute_instruction(func_call,NULL,NULL,NULL,NULL)
   parcours_appel(n->u.appel);
 }
 
@@ -201,9 +251,11 @@ void parcours_dec(n_dec *n)
   if(n){
     if(n->type == foncDec) {
       parcours_foncDec(n);
+
     }
     else if(n->type == varDec) {
       parcours_varDec(n);
+
     }
     else if(n->type == tabDec) {
       parcours_tabDec(n);
@@ -230,13 +282,17 @@ void parcours_foncDec(n_dec *n)
 		tabsymboles.base++;
 
 		entreeFonction();
+		code3a_new_etiquette(n->nom);
+		code3a_ajoute_instruction(func_begin,NULL,NULL,NULL,NULL);
+
+
 
 		parcours_l_dec(n->u.foncDec_.param);
     portee = P_VARIABLE_LOCALE;
 		parcours_l_dec(n->u.foncDec_.variables);
-      portee = P_VARIABLE_GLOBALE;
+    portee = P_VARIABLE_GLOBALE;
 		parcours_instr(n->u.foncDec_.corps);
-
+		code3a_ajoute_instruction(func_end,NULL,NULL,NULL,NULL);
 		sortieFonction(1);
 
 	}
@@ -253,16 +309,36 @@ void parcours_varDec(n_dec *n)
     {
         ajouteIdentificateur(n->nom, portee, T_ENTIER, adresseLocaleCourante, 1);
         tabsymboles.base++;
+				code3a_ajoute_instruction(
+					alloc,
+					1,
+					code3a_new_var(n->nom,portee,adresseLocaleCourante),
+					NULL,
+					NULL);
         adresseLocaleCourante= adresseLocaleCourante +4;
+
     }
     else if (portee == P_VARIABLE_LOCALE)
     {
         ajouteIdentificateur(n->nom, portee, T_ENTIER, adresseLocaleCourante, 1);
+				code3a_ajoute_instruction(
+					alloc,
+					1,
+					code3a_new_var(n->nom,portee,adresseLocaleCourante),
+					NULL,
+					NULL);
       adresseLocaleCourante= adresseLocaleCourante +4;
+
     }
     else if (portee == P_ARGUMENT)
     {
       ajouteIdentificateur(n->nom, portee, T_ENTIER, adresseArgumentCourant, 1);
+			code3a_ajoute_instruction(
+				alloc,
+				1,
+				code3a_new_var(n->nom,portee,adresseLocaleCourante),
+				NULL,
+				NULL);
       adresseArgumentCourant=adresseArgumentCourant+4;
     }
 
@@ -279,6 +355,14 @@ void parcours_tabDec(n_dec *n)
     if (portee != P_VARIABLE_GLOBALE)
 		erreur("tab defined as global ");
     ajouteIdentificateur(n->nom, portee, T_TABLEAU_ENTIER, adresseLocaleCourante, n->u.tabDec_.taille);
+
+		code3a_ajoute_instruction(
+			alloc,
+			n->u.tabDec_.taille,
+			code3a_new_var(n->nom,portee,adresseLocaleCourante),
+			NULL,
+			NULL);
+
     tabsymboles.base++;
     adresseLocaleCourante += n->u.tabDec_.taille*4;
   }
@@ -301,6 +385,14 @@ void parcours_var(n_var *n)
 
 void parcours_var_simple(n_var *n)
 {
+	code3a_ajoute_instruction(
+		alloc,
+		1,
+		code3a_new_constante(n),
+		NULL,
+		NULL);
+
+
   if (rechercheExecutable(n->nom) == -1)
 	  erreur("var undefined");
 
