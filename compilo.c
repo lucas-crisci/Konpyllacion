@@ -7,6 +7,8 @@
 #include "analyseur_syntaxique.tab.h"
 #include "affiche_arbre_abstrait.h"
 #include "parcours_arbre_abstrait.h"
+#include "tabsymboles.h"
+#include "code3a.h"
 
 FILE *yyin;
 extern char *yytext;   // déclaré dans analyseur_lexical
@@ -102,6 +104,10 @@ int main(int argc, char **argv) {
   }
   if(affiche_code3a){
   	//Affiche code 3a
+
+    yyparse();
+    parcours_n_prog(n);
+    code3a_affiche_code();
   }
   if(affiche_tabsymb){
     //Affiche table de symboles
