@@ -12,6 +12,28 @@
       <l_dec>
       </l_dec>
       <l_instr>
+        <instr_pour>
+          <varExp>
+            <var_simple>$a</var_simple>
+          </varExp>
+          <opExp>
+            inf
+            <varExp>
+              <var_simple>$a</var_simple>
+            </varExp>
+            <intExp>10</intExp>
+          </opExp>
+          <instr_affect>
+            <var_simple>$a</var_simple>
+            <opExp>
+              plus
+              <varExp>
+                <var_simple>$a</var_simple>
+              </varExp>
+              <intExp>1</intExp>
+            </opExp>
+          </instr_affect>
+        </instr_pour>
       </l_instr>
     </foncDec>
     <l_dec>

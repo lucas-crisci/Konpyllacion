@@ -23,7 +23,51 @@
           <intExp>5</intExp>
         </instr_affect>
         <l_instr>
+          <instr_pour>
+            <varExp>
+              <var_simple>i</var_simple>
+            </varExp>
+            <opExp>
+              inf
+              <varExp>
+                <var_simple>i</var_simple>
+              </varExp>
+              <intExp>20</intExp>
+            </opExp>
+            <instr_affect>
+              <var_simple>i</var_simple>
+              <opExp>
+                plus
+                <varExp>
+                  <var_simple>i</var_simple>
+                </varExp>
+                <intExp>1</intExp>
+              </opExp>
+            </instr_affect>
+          </instr_pour>
           <l_instr>
+            <instr_pour>
+              <varExp>
+                <var_simple>i</var_simple>
+              </varExp>
+              <opExp>
+                inf
+                <varExp>
+                  <var_simple>i</var_simple>
+                </varExp>
+                <intExp>20</intExp>
+              </opExp>
+              <instr_affect>
+                <var_simple>i</var_simple>
+                <opExp>
+                  plus
+                  <varExp>
+                    <var_simple>i</var_simple>
+                  </varExp>
+                  <intExp>1</intExp>
+                </opExp>
+              </instr_affect>
+            </instr_pour>
           </l_instr>
         </l_instr>
       </l_instr>

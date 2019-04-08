@@ -65,7 +65,7 @@ void affiche_instr(n_instr *n)
     else if(n->type == affecteInst) affiche_instr_affect(n);
     else if(n->type == siInst) affiche_instr_si(n);
     else if(n->type == tantqueInst) affiche_instr_tantque(n);
-    else if(n->type == tantqueInst) affiche_instr_pour(n);
+    else if(n->type == pourInst) affiche_instr_pour(n);
     else if(n->type == appelInst) affiche_instr_appel(n);
     else if(n->type == retourInst) affiche_instr_retour(n);
     else if(n->type == ecrireInst) affiche_instr_ecrire(n);
