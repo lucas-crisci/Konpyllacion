@@ -36,9 +36,8 @@ void affiche_n_prog(n_prog *n)
 {
   char *fct = "prog";
   affiche_balise_ouvrante(fct, trace_abs);
-
   affiche_l_dec(n->variables);
-  affiche_l_dec(n->fonctions); 
+  affiche_l_dec(n->fonctions);
   affiche_balise_fermante(fct, trace_abs);
 }
 
@@ -74,7 +73,7 @@ void affiche_instr(n_instr *n)
 /*-------------------------------------------------------------------------*/
 
 void affiche_instr_si(n_instr *n)
-{  
+{
   char *fct = "instr_si";
   affiche_balise_ouvrante(fct, trace_abs);
 
@@ -203,7 +202,7 @@ void affiche_opExp(n_exp *n)
   else if(n->u.opExp_.op == inferieur) affiche_xml_texte("inf", trace_abs);
   else if(n->u.opExp_.op == ou) affiche_xml_texte("ou", trace_abs);
   else if(n->u.opExp_.op == et) affiche_xml_texte("et", trace_abs);
-  else if(n->u.opExp_.op == non) affiche_xml_texte("non", trace_abs);  
+  else if(n->u.opExp_.op == non) affiche_xml_texte("non", trace_abs);
   if( n->u.opExp_.op1 != NULL ) {
     affiche_exp(n->u.opExp_.op1);
   }
@@ -253,6 +252,10 @@ void affiche_l_dec(n_l_dec *n)
     affiche_l_dec(n->queue);
     affiche_balise_fermante(fct, trace_abs);
   }
+  else{
+    affiche_balise_ouvrante(fct, trace_abs);
+    affiche_balise_fermante(fct, trace_abs);
+  }
 }
 
 /*-------------------------------------------------------------------------*/
@@ -267,7 +270,7 @@ void affiche_dec(n_dec *n)
     else if(n->type == varDec) {
       affiche_varDec(n);
     }
-    else if(n->type == tabDec) { 
+    else if(n->type == tabDec) {
       affiche_tabDec(n);
     }
   }
@@ -279,7 +282,7 @@ void affiche_foncDec(n_dec *n)
 {
   char *fct = "foncDec";
   affiche_balise_ouvrante(fct, trace_abs);
-  //  affiche_xml_texte( n->nom, trace_abs );
+  affiche_xml_texte( n->nom, trace_abs );  
   affiche_l_dec(n->u.foncDec_.param);
   affiche_l_dec(n->u.foncDec_.variables);
   affiche_instr(n->u.foncDec_.corps);
