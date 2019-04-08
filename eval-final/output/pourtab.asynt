@@ -1,0 +1,34 @@
+<prog>
+  <l_dec>
+    <tabDec>v[20]</tabDec>
+    <l_dec>
+      <varDec>i</varDec>
+      <l_dec>
+      </l_dec>
+    </l_dec>
+  </l_dec>
+  <l_dec>
+    <foncDec>
+      main
+      <l_dec>
+      </l_dec>
+      <l_dec>
+      </l_dec>
+      <l_instr>
+        <instr_affect>
+          <var_indicee>
+            <var_base_tableau>v</var_base_tableau>
+            <intExp>0</intExp>
+          </var_indicee>
+          <intExp>5</intExp>
+        </instr_affect>
+        <l_instr>
+          <l_instr>
+          </l_instr>
+        </l_instr>
+      </l_instr>
+    </foncDec>
+    <l_dec>
+    </l_dec>
+  </l_dec>
+</prog>

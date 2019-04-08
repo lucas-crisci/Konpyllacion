@@ -1,0 +1,3 @@
+0000           : alloc 1 v$a		; Alloc Dec var simple
+0001 >   fmain : fbegin		; Début de la fonction
+0002           : fend		; Fin de la fonction

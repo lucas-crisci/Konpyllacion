@@ -1,0 +1,5 @@
+0000           : alloc 1 v$a		; Alloc Dec var simple
+0001 >   fmain : fbegin		; Début de la fonction
+0002           : if 0 == 0 goto e0		; lil jump
+0003           : write 1		; Instruction ecrire
+0004 >      e0 : fend		; Fin de la fonction

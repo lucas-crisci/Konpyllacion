@@ -1,0 +1,90 @@
+0000           : alloc 10 v$tab		; Alloc Dec var indicée
+0001 >finitialiser : fbegin		; Début de la fonction
+0002           : v$tab[0] = 8		; Affect
+0003           : v$tab[1] = 6		; Affect
+0004           : v$tab[2] = 9		; Affect
+0005           : v$tab[3] = 9		; Affect
+0006           : v$tab[4] = 4		; Affect
+0007           : v$tab[5] = 2		; Affect
+0008           : v$tab[6] = 3		; Affect
+0009           : v$tab[7] = 1		; Affect
+0010           : v$tab[8] = 4		; Affect
+0011           : v$tab[9] = 5		; Affect
+0012           : fend		; Fin de la fonction
+0013 >fafficher : fbegin		; Début de la fonction
+0014           : alloc 1 v$i		; Alloc Dec var simple
+0015           : v$i = 0		; Affect
+0016 >      e0 : if v$i < v$n goto e1		; Saut test
+0017           : t0 = 0		; Cas du test faux
+0018           : goto e2		; jump jump jump
+0019 >      e1 : t0 = 1		; Cas du test vrai
+0020 >      e2 : if t0 == 0 goto e3		; Instruction tant que
+0021           : t1 = v$i
+0022           : write v$tab[t1]		; Instruction ecrire
+0023           : t2 = v$i + 1		; Arithmétique / Logique
+0024           : v$i = t2		; Affect
+0025           : goto e0		; Retour au debut
+0026 >      e3 : write 0		; Instruction ecrire
+0027           : fend		; Fin de la fonction
+0028 >fechanger : fbegin		; Début de la fonction
+0029           : alloc 1 v$temp		; Alloc Dec var simple
+0030           : t3 = v$j
+0031           : v$temp = v$tab[t3]		; Affect
+0032           : t4 = v$j
+0033           : t5 = v$i
+0034           : v$tab[t4] = v$tab[t5]		; Affect
+0035           : t6 = v$i
+0036           : v$tab[t6] = v$temp		; Affect
+0037           : fend		; Fin de la fonction
+0038 >  ftrier : fbegin		; Début de la fonction
+0039           : alloc 1 v$echange		; Alloc Dec var simple
+0040           : alloc 1 v$j		; Alloc Dec var simple
+0041           : alloc 1 v$m		; Alloc Dec var simple
+0042           : v$m = v$n		; Affect
+0043           : v$echange = 1		; Affect
+0044 >      e4 : if v$echange == 1 goto e5		; Saut test
+0045           : t7 = 0		; Cas du test faux
+0046           : goto e6		; jump jump jump
+0047 >      e5 : t7 = 1		; Cas du test vrai
+0048 >      e6 : if t7 == 0 goto e7		; Instruction tant que
+0049           : v$echange = 0		; Affect
+0050           : v$j = 0		; Affect
+0051 >      e8 : t8 = v$m - 1		; Arithmétique / Logique
+0052           : if v$j < t8 goto e9		; Saut test
+0053           : t9 = 0		; Cas du test faux
+0054           : goto e10		; jump jump jump
+0055 >      e9 : t9 = 1		; Cas du test vrai
+0056 >     e10 : if t9 == 0 goto e11		; Instruction tant que
+0057           : t10 = v$j + 1		; Arithmétique / Logique
+0058           : t11 = v$j
+0059           : if v$tab[t10] < v$tab[t11] goto e12		; Saut test
+0060           : t12 = 0		; Cas du test faux
+0061           : goto e13		; jump jump jump
+0062 >     e12 : t12 = 1		; Cas du test vrai
+0063 >     e13 : if t12 == 0 goto e14		; lil jump
+0064           : alloc 1		;  alloue place pour la valeur de retour
+0065           : param v$j		; param variable
+0066           : t13 = v$j + 1		; Arithmétique / Logique
+0067           : param t13		; Paramètre opExp
+0068           : call fechanger		; appel func
+0069           : v$echange = 1		; Affect
+0070 >     e14 : t15 = v$j + 1		; Arithmétique / Logique
+0071           : v$j = t15		; Affect
+0072           : goto e8		; Retour au debut
+0073 >     e11 : t16 = v$m - 1		; Arithmétique / Logique
+0074           : v$m = t16		; Affect
+0075           : goto e4		; Retour au debut
+0076 >      e7 : fend		; Fin de la fonction
+0077 >   fmain : fbegin		; Début de la fonction
+0078           : alloc 1		;  alloue place pour la valeur de retour
+0079           : call finitialiser		; appel func
+0080           : alloc 1		;  alloue place pour la valeur de retour
+0081           : param 10		; param constante
+0082           : call fafficher		; appel func
+0083           : alloc 1		;  alloue place pour la valeur de retour
+0084           : param 10		; param constante
+0085           : call ftrier		; appel func
+0086           : alloc 1		;  alloue place pour la valeur de retour
+0087           : param 10		; param constante
+0088           : call fafficher		; appel func
+0089           : fend		; Fin de la fonction

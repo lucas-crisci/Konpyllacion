@@ -1,0 +1,6 @@
+0000           : alloc 10 v$tab		; Alloc Dec var indicée
+0001 >   fmain : fbegin		; Début de la fonction
+0002           : v$tab[4] = 4		; Affect
+0003           : t0 = 4
+0004           : write v$tab[t0]		; Instruction ecrire
+0005           : fend		; Fin de la fonction

@@ -45,6 +45,7 @@ alphanum    {digit}|{letter}
 "sinon"      { return SINON; }
 "tantque"      { return TANTQUE; }
 "faire"      { return FAIRE; }
+"pour"      { return POUR; }
 "entier"      { return ENTIER; }
 "retour"      { return RETOUR; }
 "lire"      { return LIRE; }
@@ -72,9 +73,9 @@ int yywrap(){
  * afficher des messages d'erreur et l'arbre XML
  **********************************************************************/
 
-char *tableMotsClefs[] = {"si", "alors", "sinon", "tantque", "faire", "entier", "retour", "lire", "ecrire"};
-int codeMotClefs[] = {SI, ALORS, SINON, TANTQUE, FAIRE, ENTIER, RETOUR, LIRE, ECRIRE};
-int nbMotsClefs = 9;
+char *tableMotsClefs[] = {"si", "alors", "sinon", "tantque", "faire", "entier", "retour", "lire", "ecrire","pour"};
+int codeMotClefs[] = {SI, ALORS, SINON, TANTQUE, FAIRE, ENTIER, RETOUR, LIRE, ECRIRE, POUR};
+int nbMotsClefs = 10;
 
 void nom_token( int token, char *nom, char *valeur ) {
   int i;

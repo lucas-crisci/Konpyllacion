@@ -1,0 +1,31 @@
+0000 >    fmax : fbegin		; Début de la fonction
+0001           : if v$a < v$b goto e0		; Saut test
+0002           : t0 = 0		; Cas du test faux
+0003           : goto e1		; jump jump jump
+0004 >      e0 : t0 = 1		; Cas du test vrai
+0005 >      e1 : if t0 == 0 goto e2		; lil jump
+0006           : ret v$b		; Instruction retour
+0007           : fend		; Fin de la fonction
+0008 >      e2 : ret v$a		; Instruction retour
+0009           : fend		; Fin de la fonction
+0010           : fend		; Fin de la fonction
+0011 >   fmain : fbegin		; Début de la fonction
+0012           : alloc 1 v$v_1		; Alloc Dec var simple
+0013           : alloc 1 v$v_2		; Alloc Dec var simple
+0014           : t1 = read 		; Recuperation de la valeur de "lire"
+0015           : v$v_1 = t1		; Affect
+0016           : t2 = read 		; Recuperation de la valeur de "lire"
+0017           : v$v_2 = t2		; Affect
+0018           : alloc 1		;  alloue place pour la valeur de retour
+0019           : param v$v_1		; param variable
+0020           : param v$v_2		; param variable
+0021           : t3 = call max
+0022           : if t3 == v$v_1 goto e3		; Saut test
+0023           : t4 = 0		; Cas du test faux
+0024           : goto e4		; jump jump jump
+0025 >      e3 : t4 = 1		; Cas du test vrai
+0026 >      e4 : if t4 == 0 goto e5		; lil jump
+0027           : write v$v_1		; Instruction ecrire
+0028           : goto e6		; got
+0029 >      e5 : write v$v_2		; Instruction ecrire
+0030 >      e6 : fend		; Fin de la fonction

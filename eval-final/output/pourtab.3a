@@ -1,0 +1,5 @@
+0000           : alloc 20 vv		; Alloc Dec var indicée
+0001           : alloc 1 vi		; Alloc Dec var simple
+0002 >   fmain : fbegin		; Début de la fonction
+0003           : vv[0] = 5		; Affect
+0004           : fend		; Fin de la fonction

@@ -1,0 +1,6 @@
+0000           : alloc 1 v$a		; Alloc Dec var simple
+0001 >   fmain : fbegin		; Début de la fonction
+0002           : t0 = 5 - 3		; Arithmétique / Logique
+0003           : t1 = t0 + 2		; Arithmétique / Logique
+0004           : write t1		; Instruction ecrire
+0005           : fend		; Fin de la fonction

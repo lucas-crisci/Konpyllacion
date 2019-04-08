@@ -1,0 +1,9 @@
+0000 >fprocedure : fbegin		; Début de la fonction
+0001           : alloc 1 v$a		; Alloc Dec var simple
+0002           : v$a = 1		; Affect
+0003           : write v$a		; Instruction ecrire
+0004           : fend		; Fin de la fonction
+0005 >   fmain : fbegin		; Début de la fonction
+0006           : alloc 1		;  alloue place pour la valeur de retour
+0007           : call fprocedure		; appel func
+0008           : fend		; Fin de la fonction

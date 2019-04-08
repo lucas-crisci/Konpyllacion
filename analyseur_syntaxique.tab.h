@@ -61,18 +61,19 @@ extern int yydebug;
     INFERIEUR = 271,
     SI = 272,
     TANTQUE = 273,
-    SINON = 274,
-    ALORS = 275,
-    ET = 276,
-    OU = 277,
-    ENTIER = 278,
-    RETOUR = 279,
-    LIRE = 280,
-    ECRIRE = 281,
-    VIRGULE = 282,
-    FAIRE = 283,
-    IDENTIF = 284,
-    NOMBRE = 285
+    POUR = 274,
+    SINON = 275,
+    ALORS = 276,
+    ET = 277,
+    OU = 278,
+    ENTIER = 279,
+    RETOUR = 280,
+    LIRE = 281,
+    ECRIRE = 282,
+    VIRGULE = 283,
+    FAIRE = 284,
+    IDENTIF = 285,
+    NOMBRE = 286
   };
 #endif
 
@@ -81,7 +82,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 48 "analyseur_syntaxique.y" /* yacc.c:1909  */
+#line 49 "analyseur_syntaxique.y" /* yacc.c:1909  */
 
 	int number;
 	char* chaine;
@@ -95,7 +96,7 @@ union YYSTYPE
 	n_var* n_var;
 	n_dec* n_dec;
 
-#line 99 "analyseur_syntaxique.tab.h" /* yacc.c:1909  */
+#line 100 "analyseur_syntaxique.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

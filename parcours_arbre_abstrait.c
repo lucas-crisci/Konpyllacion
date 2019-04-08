@@ -146,6 +146,33 @@ void parcours_instr_tantque(n_instr *n)
   code3a_ajoute_etiquette(etiq_fin->u.oper_nom);
 }
 
+
+
+/*-------------------------------------------------------------------------*/
+void parcours_instr_pour(n_instr *n)
+{
+  operande* pour;
+  operande *etiq = code3a_new_etiquette_auto();
+  pour = code3a_new_etiquette(etiq->u.oper_nom);
+
+  parcours_exp(n->u.pour_.init);
+
+  operande* temporaire = parcours_exp(n->u.pour_.test);
+  operande* constante = code3a_new_constante(0);
+
+  etiq = code3a_new_etiquette_auto();
+  operande* etiq_fin = code3a_new_etiquette(etiq->u.oper_nom);
+
+  code3a_ajoute_instruction(jump_if_less,temporaire,constante,etiq_fin,NULL );
+  parcours_instr(n->u.pour_.faire);
+
+  parcours_exp(n->u.pour_.affect);
+
+  code3a_ajoute_instruction(jump, pour, NULL, NULL,NULL);
+  code3a_ajoute_etiquette(etiq_fin->u.oper_nom);
+}
+
+
 /*-------------------------------------------------------------------------*/
 
 void parcours_instr_affect(n_instr *n)    /********************/
@@ -221,8 +248,8 @@ void parcours_instr_retour(n_instr *n)
   code3a_ajoute_instruction(func_end, NULL, NULL, NULL, "Fin de la fonction");
 
 }
-
 /*-------------------------------------------------------------------------*/
+
 
 void parcours_instr_ecrire(n_instr *n)
 {
@@ -579,7 +606,7 @@ operande* parcours_var_indicee(n_var *n)   /********************/
   int address = tabsymboles.tab[indice_var].adresse;
   operande* indice = parcours_exp( n->u.indicee_.indice );
   operande* var = code3a_new_var_indicee(n->nom, P_VARIABLE_GLOBALE, address, indice);
-  printf("Type d'operande pour les indices: %d", indice->oper_type);
+  //printf("Type d'operande pour les indices: %d", indice->oper_type);
 
   return var;
 }

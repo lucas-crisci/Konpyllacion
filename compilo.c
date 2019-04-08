@@ -9,6 +9,7 @@
 #include "parcours_arbre_abstrait.h"
 #include "tabsymboles.h"
 #include "code3a.h"
+#include "c3a2nasm.h"
 
 FILE *yyin;
 extern char *yytext;   // déclaré dans analyseur_lexical
@@ -120,6 +121,10 @@ int main(int argc, char **argv) {
     parcours_n_prog(n);
   }
   if(affiche_nasm){
+    yyparse();
+    AFFtabSymboles=0;
+    parcours_n_prog(n);
+    c3a2nasm_generer();
     //Affiche code cible NASM
   }
   return 0;

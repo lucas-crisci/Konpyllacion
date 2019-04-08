@@ -405,6 +405,8 @@ void c3a2nasm_jump(char *opcode, operande *oper1, operande *oper2, operande *cib
 /******************************************************************************/
 
 void c3a2nasm_appel(operande *foncname, operande *result){
+
+
   _nasm_instr("call", foncname->u.oper_nom, NULL, NULL, NULL);
   int tabfonc = rechercheExecutable(&foncname->u.oper_nom[1]);
   int nbparam = tabsymboles.tab[tabfonc].complement;

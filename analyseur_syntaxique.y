@@ -32,6 +32,7 @@ int yydebug =0;       // debug activé
 %token SI
 //%token NOMBRE
 %token TANTQUE
+%token POUR
 %token SINON
 %token ALORS
 %token ET
@@ -84,6 +85,7 @@ int yydebug =0;       // debug activé
 %type <n_instr> instrSi
 %type <n_instr> instrAffect
 %type <n_instr> instrTantQue
+%type <n_instr> instrPour
 %type <n_instr> instrAppel
 %type <n_instr> instrRetour
 %type <n_instr> instrEcriture
@@ -179,6 +181,7 @@ instruction : instrAffect {$$=$1;}
     | instrBloc {$$=$1;}
     | instrSi {$$=$1;}
     | instrTantQue {$$=$1;}
+		| instrPour {$$=$1;}
     | instrAppel {$$=$1;}
     | instrRetour {$$=$1;}
     | instrEcriture {$$=$1;}
@@ -200,6 +203,9 @@ instrSi : SI expression ALORS instrBloc {$$ = cree_n_instr_si($2, $4, NULL);}
     ;
 
 instrTantQue : TANTQUE expression FAIRE instrBloc {$$ = cree_n_instr_tantque($2,$4);};
+    ;
+
+instrPour : POUR instrAffect expression POINT_VIRGULE instrAffect FAIRE instrBloc {$$ = cree_n_instr_pour($2,$3, $5, $7);};
     ;
 
 instrAppel : appelFct POINT_VIRGULE {$$ = cree_n_instr_appel($1);};

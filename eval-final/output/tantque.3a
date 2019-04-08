@@ -1,0 +1,9 @@
+0000           : alloc 1 v$a		; Alloc Dec var simple
+0001 >   fmain : fbegin		; Début de la fonction
+0002           : v$a = 100		; Affect
+0003 >      e0 : if v$a == 0 goto e1		; Instruction tant que
+0004           : write v$a		; Instruction ecrire
+0005           : t0 = v$a - 1		; Arithmétique / Logique
+0006           : v$a = t0		; Affect
+0007           : goto e0		; Retour au debut
+0008 >      e1 : fend		; Fin de la fonction

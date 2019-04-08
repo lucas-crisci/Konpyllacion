@@ -1,0 +1,9 @@
+0000 >fprocedure : fbegin		; Début de la fonction
+0001           : ret 1		; Instruction retour
+0002           : fend		; Fin de la fonction
+0003           : fend		; Fin de la fonction
+0004 >   fmain : fbegin		; Début de la fonction
+0005           : alloc 1		;  alloue place pour la valeur de retour
+0006           : t0 = call procedure
+0007           : write t0		; Instruction ecrire
+0008           : fend		; Fin de la fonction
