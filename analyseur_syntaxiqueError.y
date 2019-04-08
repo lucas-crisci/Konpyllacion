@@ -1,14 +1,14 @@
 %{
 #include<stdlib.h>
 #include<stdio.h>
-#define YYDEBUG 1
+#define YYDEBUG 0
 #include"syntabs.h" // pour syntaxe abstraite
 extern n_prog *n;   // pour syntaxe abstraite
 extern FILE *yyin;    // declare dans compilo
 extern int yylineno;  // declare dans analyseur lexical
 int yylex();          // declare dans analyseur lexical
 int yyerror(char *s); // declare ci-dessous
-int yydebug =1;       // debug activé
+int yydebug =0;       // debug activé
 %}
 
 %union

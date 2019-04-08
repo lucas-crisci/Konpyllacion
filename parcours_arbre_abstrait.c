@@ -39,6 +39,9 @@ char* new_e();
 extern int portee;
 extern int adresseLocaleCourante;
 extern int adresseArgumentCourant;
+
+extern int AFFtabSymboles;
+
 int adresseGlobaleCourante = 0;
 extern code3a_ code3a;
 int cpt = 0;
@@ -49,13 +52,13 @@ void parcours_n_prog(n_prog *n)     /*******************/
 {
   code3a_init();
 
-  printf("Start\n");
+  //printf("Start\n");
 
   portee = P_VARIABLE_GLOBALE;
   parcours_l_dec(n->variables);
   parcours_l_dec(n->fonctions);
 
-  printf("End\n");
+  //printf("End\n");
 
   int indice_fct;
   if((indice_fct = rechercheExecutable("main")) == -1) {
@@ -176,6 +179,7 @@ void parcours_instr_affect(n_instr *n)    /********************/
 void parcours_instr_appel(n_instr *n)
 {
   parcours_appel(n->u.appel);
+  code3a_ajoute_instruction(func_call, code3a_new_etiquette(n->u.appel->fonction), NULL, NULL, NULL);
 }
 /*-------------------------------------------------------------------------*/
 
@@ -199,6 +203,7 @@ void parcours_appel(n_appel *n)   /*********************/
   etiquette = code3a_new_etiquette(nom);
   printf("9oper_type = %d\n", etiquette->oper_type);
   code3a_ajoute_instruction(func_call, etiquette, NULL, NULL, "Appel de fonction");
+  printf("98oper_type = %d\n", etiquette->oper_type);
 }
 
 /*-------------------------------------------------------------------------*/
@@ -273,6 +278,7 @@ operande* parcours_varExp(n_exp *n)  /****************/
 /*-------------------------------------------------------------------------*/
 operande* parcours_opExp(n_exp *n)
 {
+
   operation op = n->u.opExp_.op;
   operande *op1, *op2;
   instrcode code;
@@ -282,6 +288,17 @@ operande* parcours_opExp(n_exp *n)
   }
   if( n->u.opExp_.op2 != NULL ) {
     op2 = parcours_exp(n->u.opExp_.op2);
+  }
+
+  if(op1->oper_type == O_VARIABLE && op1->u.oper_var.oper_indice != NULL && op1->u.oper_var.oper_indice->oper_type == O_VARIABLE) {
+    operande* tmp1 = code3a_new_temporaire();
+    code3a_ajoute_instruction(assign, op1->u.oper_var.oper_indice, NULL, tmp1, NULL);
+    op1->u.oper_var.oper_indice = tmp1;
+  }
+  if(op2->oper_type == O_VARIABLE && op2->u.oper_var.oper_indice != NULL && op2->u.oper_var.oper_indice->oper_type == O_VARIABLE) {
+    operande* tmp2 = code3a_new_temporaire();
+    code3a_ajoute_instruction(assign, op2->u.oper_var.oper_indice, NULL, tmp2, NULL);
+    op2->u.oper_var.oper_indice = tmp2;
   }
 
   switch (op)
@@ -318,32 +335,37 @@ operande* parcours_opExp(n_exp *n)
   if(op < egal) {
     operande* temporaire;
     temporaire = code3a_new_temporaire();
+    printf("10oper_type = %d\n", temporaire->oper_type);
     code3a_ajoute_instruction(code, op1, op2, temporaire, "Arithmétique / Logique");
 
     return temporaire;
   }
 
   operande* etiquette;
-  etiquette = code3a_new_etiquette(new_e());
 
+  operande* etiq = code3a_new_etiquette_auto();
+
+  etiquette = code3a_new_etiquette(etiq->u.oper_nom);
+  printf("11oper_type = %d\n", etiquette->oper_type);
   code3a_ajoute_instruction(code, op1, op2, etiquette, "Saut test");
 
   operande *temporaire, *const_vrai, *const_faux, *test;
   temporaire = code3a_new_temporaire();
-
-  const_vrai = code3a_new_constante(-1);
-
+  printf("12oper_type = %d\n", temporaire->oper_type);
+  const_vrai = code3a_new_constante(1);
+  printf("13oper_type = %d\n", const_vrai->oper_type);
   const_faux = code3a_new_constante(0);
-
-  test = code3a_new_etiquette(new_e());
-
+  printf("14oper_type = %d\n", const_faux->oper_type);
+  etiq = code3a_new_etiquette_auto();
+  test = code3a_new_etiquette(etiq->u.oper_nom);
+  printf("15oper_type = %d\n", test->oper_type);
   code3a_ajoute_instruction(assign, const_faux, NULL, temporaire, "Cas du test faux");
-  code3a_ajoute_instruction(jump, test, NULL, NULL, NULL);
+  code3a_ajoute_instruction(jump, test, NULL, NULL, "jump jump jump");
   code3a_ajoute_etiquette(etiquette->u.oper_nom);
   code3a_ajoute_instruction(assign, const_vrai, NULL, temporaire, "Cas du test vrai");
   code3a_ajoute_etiquette(test->u.oper_nom);
 
-  return temporaire;
+return temporaire;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -364,10 +386,10 @@ operande* parcours_lireExp(n_exp *n)
 {
   operande* temporaire;
   temporaire = code3a_new_temporaire();
-
+  printf("17oper_type = %d\n", temporaire->oper_type);
   code3a_ajoute_instruction(sys_read, NULL, NULL, temporaire, "Recuperation de la valeur de \"lire\"");
 
-  return temporaire;
+return temporaire;
 }
 
 /*-------------------------------------------------------------------------*/
@@ -439,7 +461,7 @@ void parcours_foncDec(n_dec *n)  /*********************/
 
 
   code3a_ajoute_instruction(func_end, NULL, NULL, NULL, "Fin de la fonction");
-  sortieFonction(1);
+  sortieFonction(AFFtabSymboles);
 }
 
 /*-------------------------------------------------------------------------*/

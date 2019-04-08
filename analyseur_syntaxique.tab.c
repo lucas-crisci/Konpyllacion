@@ -69,14 +69,14 @@
 
 #include"syntabs.h" // pour syntaxe abstraite
 #include "affiche_arbre_abstrait.h"
-#define YYDEBUG 1
+#define YYDEBUG 0
 
 extern n_prog *n;   // pour syntaxe abstraite
 extern FILE *yyin;    // declare dans compilo
 extern int yylineno;  // declare dans analyseur lexical
 int yylex();          // declare dans analyseur lexical
 int yyerror(char *s); // declare ci-dessous
-int yydebug =1;       // debug activé
+int yydebug =0;       // debug activé
 
 #line 82 "analyseur_syntaxique.tab.c" /* yacc.c:339  */
 
